@@ -1,25 +1,25 @@
-// import React from 'react'
 
-// function Course() {
-//   return (
-//     <div>Course</div>
-//   )
-// }
-
-// export default Course
-// inside Course.jsx
 import React, { useEffect, useState } from 'react';
-import Cards from './Cards'; // Make sure this path is correct
+import Cards from './Cards'; // Ensure this path is correct
+import axios from 'axios'; // ✅ Import axios
 import { Link } from 'react-router-dom';
+
 
 const Course = () => {
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    fetch("/list.json")
-      .then((res) => res.json())
-      .then((data) => setList(data))
-      .catch((error) => console.error("Error loading list.json:", error));
+    const getList = async () => {
+      try {
+        const res = await axios.get("http://localhost:4001/books"); 
+ // ✅ Fetch using axios
+        setList(res.data);
+      } catch (error) {
+        console.error("Error loading list.json:", error);
+      }
+    };
+
+    getList(); // Call the async function
   }, []);
 
   return (
@@ -31,12 +31,18 @@ const Course = () => {
             <span className="text-pink-500">Here!</span>
           </h1>
           <p className="mt-12">
-         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Porro, assumenda? Repellendus, iste corrupti? Tempore laudantium repellendus accusamus accusantium sed architecto odio, nisi expedita quas quidem nesciunt debitis dolore non aspernatur praesentium assumenda sint quibusdam, perspiciatis, explicabo sequi fugiat amet animi eos aut Nobis quisquam reiciendis sunt quis sed magnam consequatur!
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Porro, 
+            assumenda? Repellendus, iste corrupti? Tempore laudantium repellendus 
+            accusamus accusantium sed architecto odio, nisi expedita quas quidem 
+            nesciunt debitis dolore non aspernatur praesentium assumenda sint 
+            quibusdam, perspiciatis, explicabo sequi fugiat amet animi eos aut 
+            Nobis quisquam reiciendis sunt quis sed magnam consequatur!
           </p>
-          <Link to ="/"> 
-          <button className="mt-6 bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-700 duration-300">
-            Back
-          </button></Link>
+          <Link to="/"> 
+            <button className="mt-6 bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-700 duration-300">
+              Back
+            </button>
+          </Link>
         </div>
       </div>
 
@@ -54,3 +60,5 @@ const Course = () => {
 };
 
 export default Course;
+
+

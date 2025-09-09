@@ -1,42 +1,61 @@
-// import React from 'react'
-// import Home from "./home/Home";
-// import { Routes, Route } from "react-router-dom";
-// import { Courses } from "./courses/Courses";
+
+// import React from 'react';
+
+// import Home from './home/Home';
+// import Courses from './courses/courses';
+// import { Routes, Route, Navigate } from "react-router-dom";
+// import Signup from './components/Signup';
+// import { useAuth } from "./context/AuthContext";
+// import { ToastContainer } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
+
+
 
 
 // function App() {
-//   return(<>
-//     {/* <Home/>
-//     <Course/> */}
-//     <Routes>
-//       <Route path="/" element={<Home/>}/>
-//       <Route path="/course" element={<Courses/>}/>
-
-//     </Routes>
-//    </>
-//    )
-  
+//   const { authUser, setAuthUser: _setAuthUser } = useAuth();
+//     console.log(authUser);
+//   return (
+//     <>
+//     <div className="dark:bg-slate-900  dark:text-white">
+//       <Routes>
+//         <Route path="/" element={<Home />} />
+//         <Route path="/course" element={authUser?<Courses />:<Navigate to="/signup"/>} />
+//         <Route path="/signup" element={<Signup />} />
+//       </Routes>
+      
+//       </div>
+//     </>
+//   );
 // }
 
-// export default App
-// src/App.jsx
+// export default App;
 import React from 'react';
 import Home from './home/Home';
 import Courses from './courses/courses';
-import { Routes, Route } from 'react-router-dom';
 import Signup from './components/Signup';
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useAuth } from "./context/AuthContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
+  const { authUser } = useAuth();
+  console.log(authUser);
+
   return (
-    <>
-    <div className="dark:bg-slate-900  dark:text-white">
+    <div className="dark:bg-slate-900 dark:text-white">
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/course" element={<Courses />} />
+        <Route path="/course" element={authUser ? <Courses /> : <Navigate to="/signup" />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
-      </div>
-    </>
+
+      <ToastContainer 
+        position="top-right"
+        autoClose={3000}
+      />
+    </div>
   );
 }
 
